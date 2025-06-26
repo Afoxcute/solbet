@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@auth/core": "^0.39.0",
+    "@civic/auth": "^0.8.1",
+    "@civic/auth-web3": "^0.6.1",
     "@libsql/client": "^0.15.4",
     "@next/font": "^14.2.15",
     "@privy-io/react-auth": "^2.17.1",
