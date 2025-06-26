@@ -1,0 +1,20 @@
+packages:
+  - 'packages/**'
+  - 'apps/**'
+  
+ignoredBuiltDependencies:
+  - bigint-buffer
+  - unrs-resolver
+  - usb
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - blake-hash
+  - bufferutil
+  - esbuild
+  - prisma
+  - protobufjs
+  - sharp
+  - sqlite3
+  - tiny-secp256k1
+  - utf-8-validate

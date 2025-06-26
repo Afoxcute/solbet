@@ -1,0 +1,11 @@
+import React from 'react'
+
+const Logo = ({ pathname }: { pathname: string }) => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke={`${pathname !== '/' ? '#000' : '#ECF5F5'}`} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" />
+      <path d="M12 8.21002L8.43328 11.202M12 8.21002L15.5667 11.202M12 8.21002V5.51143M8.43328 11.202L9.375 14.9999M8.43328 11.202L5.955 10.152M9.375 14.9999H14.625M9.375 14.9999L8.0625 17.2499M14.625 14.9999L15.5667 11.202M14.625 14.9999L15.9375 17.2499L14.625 20.578M15.5667 11.202L18.045 10.152M18.045 10.152L19.2534 6.71799M18.045 10.152L20.9531 12.6547M5.955 10.152L4.74656 6.71799M5.955 10.152L3.04688 12.6547M12 5.51143L15 3.51268M12 5.51143L9 3.51221M19.2534 17.2499H16.0312M8.0625 17.2499L9.39234 20.6014M8.0625 17.2499H4.76391" stroke={`${pathname !== '/' ? '#000' : '#ECF5F5'}`} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>)
+}
+
+export default Logo
