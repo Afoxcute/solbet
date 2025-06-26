@@ -57,6 +57,18 @@ export default function PrivyLogin() {
     }
   };
 
+  const handleConnectExternalWallet = () => {
+    try {
+      // Use type assertion to pass the chain parameter
+      connectWallet({ 
+        walletChainType: 'solana-only' 
+      } as any);
+    } catch (error) {
+      console.error("Error connecting external wallet:", error);
+      toast.error("Failed to connect external wallet");
+    }
+  };
+
   if (!ready) {
     return <div className="p-4">Initializing Solana wallet...</div>;
   }
@@ -148,7 +160,7 @@ export default function PrivyLogin() {
           </button>
         )}
         <button
-          onClick={() => connectWallet({ chain: 'solana' })}
+          onClick={handleConnectExternalWallet}
           className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Connect Another Solana Wallet

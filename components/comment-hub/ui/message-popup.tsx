@@ -17,6 +17,7 @@ import { set } from "@project-serum/anchor/dist/cjs/utils/features";
 import { useAtom } from "jotai";
 import { allMessagesAtom } from "@/stores/navStore";
 import LoadingIcon from "@/public/icons/LoadingIcon";
+import Image from "next/image";
 
 const MessagePopup = ({ seletedGame }: { seletedGame: any }) => {
   const [messages, setMessages] = useAtom(allMessagesAtom)
@@ -44,7 +45,7 @@ const MessagePopup = ({ seletedGame }: { seletedGame: any }) => {
     if (!isLoading && allMessages) {
       setMessages(allMessages);
     }
-  }, [allMessages]);
+  }, [allMessages, isLoading, setMessages]);
 
 
   const handleWagerClick = (message: any) => {
@@ -179,12 +180,12 @@ const MessagePopup = ({ seletedGame }: { seletedGame: any }) => {
             } py-4`}
           >
             <div className="flex gap-2 items-start">
-              <img
+              <Image
                 src={message.author?.profileImage}
                 alt={message.author?.name}
-                width={500}
-                height={500}
-                className="size-[50px] rounded-full"
+                width={50}
+                height={50}
+                className="size-[50px] rounded-full object-cover"
               />
 
               <div className="grid gap-1 w-full">
@@ -304,6 +305,7 @@ const MessagePopup = ({ seletedGame }: { seletedGame: any }) => {
         onProceed={handleWagerProceed}
         username={selectedMessage?.username || "User"}
         insufficientBalance={insufficientBalance}
+        escrowAccount={seletedGame.hub.escrowAccount || ""}
       />
 
       <FundWagerModal

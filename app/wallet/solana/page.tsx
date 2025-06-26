@@ -129,7 +129,7 @@ export default function SolanaWalletPage() {
       {authenticated && !isReady && !isCreatingWallet && (
         <div className="mt-8 p-4 border border-yellow-200 bg-yellow-50 rounded-lg">
           <h2 className="text-xl font-semibold mb-2">No Solana Wallet Detected</h2>
-          <p className="mb-4">You're logged in, but you don't have a Solana wallet yet.</p>
+          <p className="mb-4">You&apos;re logged in, but you don&apos;t have a Solana wallet yet.</p>
           <button
             onClick={handleCreateWallet}
             className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded"

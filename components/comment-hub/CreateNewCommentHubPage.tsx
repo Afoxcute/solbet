@@ -48,7 +48,7 @@ const CreateNewCommentHubPage: FC<CreateNewCommentHubPageProps> = ({allGames}) =
     if (seletedGame !== undefined) {
       setSearchedGames([]);
     }
-  }, [])
+  }, [seletedGame])
 
   return (
     <main>

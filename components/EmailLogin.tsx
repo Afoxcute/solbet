@@ -15,7 +15,7 @@ export default function EmailLogin() {
       toast.success(isNewUser ? "Welcome! Your account has been created." : "Welcome back!");
     },
     onError: (error) => {
-      toast.error(`Login error: ${error.message}`);
+      toast.error(`Login error: ${error}`);
     }
   });
 
@@ -28,8 +28,9 @@ export default function EmailLogin() {
     try {
       await sendCode({ email });
       toast.success("Verification code sent to your email");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending code:", error);
+      toast.error(error?.toString() || "Failed to send verification code");
     }
   };
 
@@ -41,8 +42,9 @@ export default function EmailLogin() {
     
     try {
       await loginWithCode({ code });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error logging in:", error);
+      toast.error(error?.toString() || "Failed to verify code");
     }
   };
 
@@ -115,7 +117,7 @@ export default function EmailLogin() {
       
       {state.status === 'error' && (
         <p className="text-red-600 text-sm mt-2">
-          {state.error?.message || "An error occurred. Please try again."}
+          {state.error?.toString() || "An error occurred. Please try again."}
         </p>
       )}
     </div>

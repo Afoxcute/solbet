@@ -25,7 +25,7 @@ const ProfilePage = () => {
     if (user === null) {
       router.push('/');
     }
-  }, [user]);
+  }, [user, router]);
 
   const handleTweetSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

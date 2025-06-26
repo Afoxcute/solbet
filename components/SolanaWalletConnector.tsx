@@ -92,7 +92,7 @@ const SolanaWalletConnector: React.FC<SolanaWalletConnectorProps> = ({ className
     } finally {
       setAuthenticating(false);
     }
-  }, [publicKey, signMessage, fetchBalance, router]);
+  }, [publicKey, signMessage, fetchBalance]);
 
   // Handle wallet connection changes
   useEffect(() => {

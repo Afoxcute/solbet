@@ -97,7 +97,6 @@ function BettingApp() {
     matchId: string,
     amount: number,
     predictedWinner: string,
-    tokenMint: string,
     bettorTokenAccount: string,
     escrowTokenAccount: string
   ) => {
@@ -108,7 +107,6 @@ function BettingApp() {
         matchId,
         amount,
         predictedWinner,
-        new PublicKey(tokenMint),
         new PublicKey(bettorTokenAccount),
         new PublicKey(escrowTokenAccount)
       );
@@ -145,7 +143,6 @@ function BettingApp() {
                   match.id,
                   1, // 1 token
                   match.teamA, // Predicting Team A will win
-                  'your-token-mint-address',
                   'your-token-account-address',
                   'escrow-token-account-address'
                 )}>
@@ -155,7 +152,6 @@ function BettingApp() {
                   match.id,
                   1, // 1 token
                   match.teamB, // Predicting Team B will win
-                  'your-token-mint-address',
                   'your-token-account-address',
                   'escrow-token-account-address'
                 )}>

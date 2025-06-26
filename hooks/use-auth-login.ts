@@ -63,12 +63,19 @@ export const useAuthLogin = () => {
         const walletAddress = solanaPublicKey ? 
           solanaPublicKey.toString() : 
           privyUser?.wallet?.address || '';
+        
+        // Convert email to string
+        const emailString = privyUser.email ? String(privyUser.email) : '';
+        
+        // Access properties safely with optional chaining and type assertions
+        const userName = (privyUser as any)?.name || '';
+        const userAvatar = (privyUser as any)?.avatar || '';
           
         setUser({
-          email: privyUser.email || '',
+          email: emailString,
           id: privyUser.id,
-          name: privyUser.name || '',
-          profileImage: privyUser.avatar || '',
+          name: userName,
+          profileImage: userAvatar,
           address: walletAddress,
         });
         

@@ -52,16 +52,16 @@ export async function POST(req: NextRequest) {
     } else {
       // Create new user
       const newUser = {
-        id: crypto.randomUUID(),
         name: userData.name || `User ${userData.verifierId?.slice(0, 6) || 'New'}`,
         email: userData.email,
         image: userData.profileImage,
       };
       
-      await db.insert(users)
-        .values(newUser);
+      const [insertedUser] = await db.insert(users)
+        .values(newUser)
+        .returning({ id: users.id });
         
-      userId = newUser.id;
+      userId = insertedUser.id;
     }
     
     // If we have a public key, create or update the wallet
@@ -75,8 +75,8 @@ export async function POST(req: NextRequest) {
         // Update existing wallet
         await db.update(wallets)
           .set({ 
-            lastSignedIn: new Date().toISOString(),
             userId: userId, // Link wallet to the current user
+            updatedAt: new Date().toISOString()
           })
           .where(eq(wallets.id, existingWallet.id));
           
@@ -84,21 +84,19 @@ export async function POST(req: NextRequest) {
       } else {
         // Create new wallet
         const newWallet = {
-          id: crypto.randomUUID(),
           publicKey: userData.publicKey,
           provider: 'web3auth',
           userId: userId,
           isMainWallet: true,
-          connectedAt: new Date().toISOString(),
-          lastSignedIn: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         };
         
-        await db.insert(wallets)
-          .values(newWallet);
+        const [insertedWallet] = await db.insert(wallets)
+          .values(newWallet)
+          .returning({ id: wallets.id });
           
-        walletId = newWallet.id;
+        walletId = insertedWallet.id;
       }
       
       // Update wallet balance
@@ -120,7 +118,7 @@ export async function POST(req: NextRequest) {
 }
 
 // Function to update the wallet balance
-async function updateWalletBalance(publicKey: string, walletId: string) {
+async function updateWalletBalance(publicKey: string, walletId: number) {
   try {
     // Connect to Solana network
     const connection = new Connection(

@@ -42,7 +42,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-xl">You're already logged in!</p>
+          <p className="text-xl">You&apos;re already logged in!</p>
           <p className="mt-2">Redirecting to home page...</p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function LoginPage() {
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-gray-600">
-                Connect your Solana wallet to access the platform. A wallet will be automatically created for you if you don't have one.
+                Connect your Solana wallet to access the platform. A wallet will be automatically created for you if you don&apos;t have one.
               </p>
               <button
                 onClick={handleWalletLogin}

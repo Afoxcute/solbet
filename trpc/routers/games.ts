@@ -37,15 +37,12 @@ export const gameRouter = createTRPCRouter({
       try {
         const allowedLeagueIds = [47, 87, 42];
         const allLiveGames = await externalFootballApi('football-current-live')
-        const filteredGames = allLiveGames.data.response.live.filter((game: any) => allowedLeagueIds.includes(game.leagueId))
-
-        // return allLiveGames.data.response.live;
+        const response = allLiveGames?.data?.response?.live || [];
+        const filteredGames = response.filter((game: any) => allowedLeagueIds.includes(game.leagueId));
         return filteredGames;
       } catch(error) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'No data',
-        })
+        console.error('Error fetching live matches:', error);
+        return [];
       }
     }),
 
@@ -83,21 +80,25 @@ export const gameRouter = createTRPCRouter({
 
   getAllFixtures: baseProcedure
     .query(async () => {
-      const allFixtures = []
-      const [premierLeagueGames, championsGames, laligaGames] = await Promise.all([
-        externalFootballApi('football-get-all-matches-by-league?leagueid=47'),
-        externalFootballApi('football-get-all-matches-by-league?leagueid=42'),
-        externalFootballApi('football-get-all-matches-by-league?leagueid=87')
-      ])
+      try {
+        const allFixtures = [];
+        const [premierLeagueGames, championsGames, laligaGames] = await Promise.all([
+          externalFootballApi('football-get-all-matches-by-league?leagueid=47').catch(() => ({ data: { response: { matches: [] } } })),
+          externalFootballApi('football-get-all-matches-by-league?leagueid=42').catch(() => ({ data: { response: { matches: [] } } })),
+          externalFootballApi('football-get-all-matches-by-league?leagueid=87').catch(() => ({ data: { response: { matches: [] } } }))
+        ]);
 
-      const filteredPremierLeagueGames = premierLeagueGames.data.response.matches.filter((match: any) => match.status.started === false)
-      const filteredUCLGames = championsGames.data.response.matches.filter((match: any) => match.status.started === false)
-      const filteredLaLigaGames = laligaGames.data.response.matches.filter((match: any) => match.status.started === false)
+        const filteredPremierLeagueGames = premierLeagueGames?.data?.response?.matches?.filter((match: any) => match?.status?.started === false) || [];
+        const filteredUCLGames = championsGames?.data?.response?.matches?.filter((match: any) => match?.status?.started === false) || [];
+        const filteredLaLigaGames = laligaGames?.data?.response?.matches?.filter((match: any) => match?.status?.started === false) || [];
 
-      allFixtures.push(...filteredPremierLeagueGames, ...filteredUCLGames, ...filteredLaLigaGames)
-
-      return allFixtures;
-  }),
+        allFixtures.push(...filteredPremierLeagueGames, ...filteredUCLGames, ...filteredLaLigaGames);
+        return allFixtures;
+      } catch (error) {
+        console.error('Error fetching fixtures:', error);
+        return [];
+      }
+    }),
 
   getFixturesForPremierLeague: baseProcedure
     .query(async () => {

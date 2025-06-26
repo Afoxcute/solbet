@@ -116,7 +116,7 @@ const WalletPage = () => {
       setBalance(null);
       setTokens([]);
     }
-  }, [connected, publicKey, connection]);
+  }, [connected, publicKey, connection, fetchWalletData]);
 
   const handleDisconnect = () => {
     disconnect();
